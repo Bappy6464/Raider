@@ -1,0 +1,1385 @@
+//This is my attempt at creating agar.io as a singleplayer version
+
+
+
+//Credit to agar.io for agar.io
+
+
+
+//Credit to Will for blob function
+
+
+
+//Credit to edg for spawn
+
+
+
+//by lordats
+
+
+
+
+
+var printuh = true;
+if(printuh===true){
+println("I am making a REAL game using this!");
+printuh=false;
+}
+//Intro variables
+
+
+
+{
+
+
+
+var skip = false;
+
+
+
+var lordatsO = function(x,y,q,u,a,r,s){
+
+
+
+translate(x,y);
+
+
+
+scale(s);
+
+
+
+strokeWeight(5);
+
+
+
+for(var j=q; j<u; j+=5){
+
+
+
+for(var i=r; i<360+r; i+=120-a){
+
+
+
+    stroke(255, 255, 0,255-255*j/u);
+
+
+
+ line(cos(i)*j,sin(i)*j,cos(i+60)*j,sin(i+60)*j);
+
+
+
+}
+
+
+
+}
+
+
+
+scale(1/s);
+
+
+
+translate(-x,-y);
+
+
+
+};
+
+
+
+var g=0;
+
+
+
+var h=0;
+
+
+
+var k=0;
+
+
+
+var hh=0;
+
+
+
+var f = createFont("Segoe UI Light");
+
+
+
+textFont(f);    
+
+
+
+}
+
+
+
+//Title screen variables
+
+
+
+{
+
+
+
+var scene = "choose";
+
+
+
+var go = false;
+
+
+
+var play = false;
+
+
+
+var gtr = 0;
+
+
+
+var gtg = 0;
+
+
+
+var gtb = 0;
+
+
+
+var typing = 0;
+
+
+
+var timing = 1;
+
+
+
+var author = "lordats";
+
+
+
+var drawBG = function() {
+
+
+
+        background(0, 0, 0);
+
+
+
+        for(var BALLS = 10;BALLS < 65;BALLS +=10){
+
+
+
+        fill(random(0,255),random(0,255),random(0,255));
+
+
+
+        ellipse(random(0,400),random(0,400),25,25);
+
+
+
+        }
+
+
+
+    };
+
+
+
+var drawMenu = function () {
+
+
+
+        fill(255, 255, 255);
+
+
+
+        noStroke();
+
+
+
+        rectMode(CENTER);
+
+
+
+        rect(200, 300, 200, 100, 20);
+
+
+
+        fill(0);
+
+
+
+        textFont(createFont("monospace"));
+
+
+
+        textSize(80);
+
+
+
+        text("Play", 200, 323);
+
+
+
+        if(mouseX <= 300 && mouseX >= 100 && mouseY <= 350 && mouseY >= 250) {
+
+
+
+            fill(105, 105, 105);
+
+
+
+            noStroke();
+
+
+
+            rectMode(CENTER);
+
+
+
+            rect(200, 300, 200, 100, 20);
+
+
+
+            fill(0, 0, 0);
+
+
+
+            textFont(createFont("monospace"));
+
+
+
+            textSize(80);
+
+
+
+            text("Play", 200, 323);
+
+
+
+        }
+
+
+
+        fill(255, 255, 255);
+
+
+
+        textAlign(CENTER);
+
+
+
+        textSize(100);
+
+
+
+        fill(255, 255, 255);
+
+
+
+        text("Agar.io", 200, 100);
+
+
+
+    };
+
+
+
+var drawGame = function () {
+
+
+
+    if(play === true) {
+
+
+
+        background(0, 0, 0);
+
+
+
+        fill(255, 255, 255);
+
+
+
+        textAlign(LEFT);
+
+
+
+        textSize(28);
+
+
+
+        fill(gtr,gtg,gtb);
+
+
+
+        //Instructions
+
+
+
+        text("This is a game based on\nagar.io, but a single\nplayer version. Use the\nmouse to move and\nget bigger by eating\nother blobs! You will\nget smaller fast too so\ntry to maintain your\nsize!\n\nby lordats".substring(0, typing), 10, 35);
+
+
+
+        typing+=timing;
+
+
+
+         rectMode(CORNER);
+
+
+
+        fill(255, 255, 255);
+
+
+
+    rect(300,300,100,50);
+
+
+
+if(mouseX>300 && mouseX<400 && mouseY>300 && mouseY<350){
+
+
+
+    fill(100,100,100);
+
+
+
+    rect(300,300,100,50);
+
+
+
+    }
+
+
+
+    fill(0, 0, 0);
+
+
+
+    textSize(40);
+
+
+
+    text("Play", 305, 335);
+
+
+
+    if(mouseX>300 && mouseX<400 && mouseY>300 && mouseY<350 && mouseIsPressed){
+
+
+
+        go=true;    
+
+
+
+    }
+
+
+
+    }
+
+
+
+        if(mouseIsPressed && mouseX <= 300 && mouseX >= 100 && mouseY <= 350 && mouseY >= 250) {           
+
+
+
+            play = true;
+
+
+
+        }};
+
+
+
+}
+
+
+
+//Game variavles
+
+
+
+{
+
+
+
+var blob2 = false;
+
+
+
+var t_speed=0.01;
+
+
+
+var dacolor = color(255, 0, 0);
+
+
+
+var colormode = "Red";
+
+
+
+var limittime = 0;
+
+
+
+var limit = 60;
+
+
+
+var sx=[];
+
+
+
+var sy=[];
+
+
+
+var score = 0;
+
+
+
+var time = 0;
+
+
+
+var maxtime = 0;
+
+
+
+var balls = 15;
+
+
+
+var x = 200;
+
+
+
+var y = 200;
+
+
+
+var r=[];
+
+
+
+var g=[];
+
+
+
+var b=[];
+
+
+
+var keys = [];
+
+
+
+var keyPressed = function(){
+
+
+
+  keys[keyCode] = true;  
+
+
+
+};
+
+
+
+var keyReleased = function(){
+
+
+
+  keys[keyCode] = false;  
+
+
+
+};
+
+
+
+var YourBlob = function(x, y, color, size) {
+
+
+
+    this.color = color;
+
+
+
+    this.size = size;
+
+
+
+    this.x = x;
+
+
+
+    this.y = y;
+
+
+
+    this.isRainbowing = false;
+
+
+
+    this.drawMe = function() {
+
+
+
+        noStroke();
+
+
+
+        if(colormode!=="Winston"){
+
+
+
+        fill(dacolor);
+
+
+
+        ellipse(this.x, this.y, this.size, this.size);
+
+
+
+        }
+
+
+
+    };
+
+
+
+};
+
+
+
+var blob1 = new YourBlob(23, 23, color(dacolor), 20); 
+
+
+
+}
+
+
+
+var draw = function() {
+
+
+
+    //Colors
+
+
+
+    {
+
+
+
+    gtr-=1.5;
+
+
+
+    gtg-=1.5;
+
+
+
+    gtb-=1.5;
+
+
+
+    if(gtr<0){
+
+
+
+        gtr=255;
+
+
+
+        gtg=255;
+
+
+
+        gtb=255;
+
+
+
+        }
+
+
+
+    }
+
+
+
+    cursor(CROSS);
+
+
+
+    if(skip === false){
+
+
+
+    background(0, 0, 0);
+
+
+
+    g=sin(h/2)*160;
+
+
+
+    if(h>250){
+
+
+
+     k=h-250;   
+
+
+
+    }
+
+
+
+    if(k>80){
+
+
+
+     k=80;   
+
+
+
+    }
+
+
+
+    h=hh;
+
+
+
+    if(hh>325){
+
+
+
+    h=325;
+
+
+
+    }
+
+
+
+    lordatsO(200-60*h/325,200,g-90,90,k*1,hh,1.5-h/325);
+
+
+
+    fill(255, 255, 255);
+
+
+
+    textSize(76);
+
+
+
+    if(hh>300){
+
+
+
+    text("rdats",410-(h-300)*9,225);
+
+
+
+    text("l",-20+95*(h-300)/25,225);
+
+
+
+    }
+
+
+
+    hh++;
+
+
+
+    fill(255, 255, 255);
+
+
+
+    rect(10,340,100,50);
+
+
+
+    fill(0, 0, 0);
+
+
+
+    textSize(50);
+
+
+
+    text("Skip",15,380);
+
+
+
+    if(mouseX>10&&mouseX<110&&mouseY>340&&mouseY<490){
+
+
+
+    fill(100,100,100);
+
+
+
+    rect(10,340,100,50);
+
+
+
+    fill(0, 0, 0);
+
+
+
+    textSize(50);
+
+
+
+    text("Skip",15,380);
+
+
+
+    }
+
+
+
+    if(frameCount > 500 || mouseX>10&&mouseX<110&&mouseY>340&&mouseY<490&&mouseIsPressed){
+
+
+
+    skip=true;
+
+
+
+    }}
+
+
+
+    
+
+
+
+    if(skip === true){
+
+
+
+        drawBG();
+
+
+
+        drawMenu();
+
+
+
+        drawGame();
+
+
+
+    if(go === true){
+
+
+
+    if(scene === "choose"){
+
+
+
+    background(255,255,255);
+
+
+
+    fill(0, 0, 0);
+
+
+
+    textSize(50);
+
+
+
+    text("Choose a skin!",10,50);
+
+
+
+    fill(255, 0, 0);
+
+
+
+    ellipse(50,100,50,50);
+
+
+
+    fill(0, 0, 255);
+
+
+
+    ellipse(150,100,50,50);
+
+
+
+    fill(0, 255, 0);
+
+
+
+    ellipse(250,100,50,50);
+
+
+
+    fill(255, 255, 0);
+
+
+
+    ellipse(350,100,50,50);
+
+
+
+    fill(255, 150, 0);
+
+
+
+    ellipse(50,200,50,50);
+
+
+
+    fill(255, 0, 255);
+
+
+
+    ellipse(150,200,50,50);
+
+
+
+    fill(0, 0, 0);
+
+
+
+    ellipse(250,200,50,50);
+
+
+
+    image(getImage("creatures/Winston"),325,180,50,50);
+
+
+
+    if(mouseX>25&&mouseX<75&&mouseY>75&&mouseY<125&&mouseIsPressed){
+
+
+
+        colormode = "Red";    
+
+
+
+    }
+
+
+
+    if(mouseX>125&&mouseX<175&&mouseY>75&&mouseY<125&&mouseIsPressed){
+
+
+
+        colormode = "Blue";    
+
+
+
+    }
+
+
+
+    if(mouseX>225&&mouseX<275&&mouseY>75&&mouseY<125&&mouseIsPressed){
+
+
+
+        colormode = "Green";    
+
+
+
+    }
+
+
+
+    if(mouseX>325&&mouseX<375&&mouseY>75&&mouseY<125&&mouseIsPressed){
+
+
+
+        colormode = "Yellow";    
+
+
+
+    }
+
+
+
+    if(mouseX>25&&mouseX<75&&mouseY>175&&mouseY<225&&mouseIsPressed){
+
+
+
+        colormode = "Orange";    
+
+
+
+    }
+
+
+
+    if(mouseX>125&&mouseX<175&&mouseY>175&&mouseY<225&&mouseIsPressed){
+
+
+
+        colormode = "Pink";    
+
+
+
+    }
+
+
+
+    if(mouseX>225&&mouseX<275&&mouseY>175&&mouseY<225&&mouseIsPressed){
+
+
+
+        colormode = "Black";    
+
+
+
+    }
+
+
+
+    if(mouseX>325&&mouseX<375&&mouseY>175&&mouseY<225&&mouseIsPressed){
+
+
+
+        colormode = "Winston";    
+
+
+
+    }
+
+
+
+    text("Color: "+colormode,10,300);
+
+
+
+    fill(150,150,150);
+
+
+
+    rect(150,320,100,50);
+
+
+
+    fill(0, 0, 0);
+
+
+
+    textSize(30);
+
+
+
+    text("Start",155,355);
+
+
+
+    if(mouseX>150&&mouseX<250&&mouseY>320&&mouseY<370&&mouseIsPressed){
+
+
+
+        scene = "game";
+
+
+
+    }
+
+
+
+    }
+
+
+
+    if(scene === "game"){
+
+
+
+        {
+
+
+
+        if(colormode === "Red"){
+
+
+
+            dacolor = color(255, 0, 0);
+
+
+
+        }
+
+
+
+        if(colormode === "Blue"){
+
+
+
+            dacolor = color(0, 0, 255);
+
+
+
+        }
+
+
+
+        if(colormode === "Green"){
+
+
+
+            dacolor = color(0, 255, 0);
+
+
+
+        }
+
+
+
+        if(colormode === "Yellow"){
+
+
+
+            dacolor = color(255, 255, 0);
+
+
+
+        }
+
+
+
+        if(colormode === "Orange"){
+
+
+
+            dacolor = color(255, 150, 0);
+
+
+
+        }
+
+
+
+        if(colormode === "Pink"){
+
+
+
+            dacolor = color(255, 0, 255);
+
+
+
+        }
+
+
+
+        if(colormode === "Black"){
+
+
+
+            dacolor = color(0, 0, 0);
+
+
+
+        }
+
+
+
+        }
+
+
+
+        if(limit<=0){
+
+
+
+        scene="dead";    
+
+
+
+        }
+
+
+
+    background(255, 255, 255);
+
+
+
+    {
+
+
+
+    /* Draws Player */
+
+
+
+    blob1.drawMe();
+
+
+
+    if(colormode === "Winston"){
+
+
+
+        imageMode(CENTER);
+
+
+
+        image(getImage("creatures/Winston"),blob1.x,blob1.y,blob1.size,blob1.size);
+
+
+
+    }
+
+
+
+    }
+
+
+
+    time++;
+
+
+
+    if (time > maxtime) {
+
+
+
+        fill(0, 0, 0);
+
+
+
+        balls++;
+
+
+
+        balls++;
+
+
+
+        balls++;
+
+
+
+        time = -10;
+
+
+
+        sx[balls]=random(0,400);
+
+
+
+        sy[balls]=random(0,400);
+
+
+
+        r[balls]=random(0,50);
+
+
+
+        g[balls]=random(0,50);
+
+
+
+        b[balls]=random(0,50);
+
+
+
+        if(blob1.size>100){
+
+
+
+        blob1.size-=10;
+
+
+
+        }
+
+
+
+    }
+
+
+
+    limittime++;
+
+
+
+    if(limittime>60){
+
+
+
+        limittime=0;
+
+
+
+        limit-=1;
+
+
+
+        balls-=1;  
+
+
+
+    }
+
+
+
+    
+
+
+
+    for (var i=10; i< balls; i++) {
+
+
+
+        var theta = atan2(mouseY-blob1.y, mouseX-blob1.x);
+
+
+
+        blob1.x+=t_speed*cos(theta);
+
+
+
+        blob1.y+=t_speed*sin(theta); 
+
+
+
+        fill(0, 0, 0);
+
+
+
+        if ((pow(blob1.x-sx[i],2)+pow(blob1.y-sy[i],2)) < 20*blob1.size) {     
+
+
+
+            blob1.size+=random(1,15);
+
+
+
+            sx[i] = -300;
+
+
+
+             sy[i] = -300;
+
+
+
+            score++;
+
+
+
+         } else {
+
+
+
+        fill(r[i], g[i], b[i]);  
+
+
+
+        ellipse(sx[i], sy[i], 15, 15);
+
+
+
+      }
+
+
+
+    }
+
+
+
+    
+
+
+
+       fill(0, 0, 0);
+
+
+
+textSize(30);
+
+
+
+text("SCORE: "+ score, 100, 350);
+
+
+
+text("TIME: "+ limit, 100, 380);
+
+
+
+}
+
+
+
+    if (scene === "dead") {
+
+
+
+    fill(255, 255, 255);
+
+
+
+    background(0, 0, 0);
+
+
+
+    textSize(50);
+
+
+
+    text("Great Job!", 40, 200);
+
+
+
+    textSize(35);
+
+
+
+    text("Restart to play again", 5, 100);
+
+
+
+    textSize(20);
+
+
+
+    text("By: " + author, 20, 350);
+
+
+
+    textSize(30);
+
+
+
+    text("Score: " + score, 10, 250);
+
+
+
+                }
+
+
+
+}
+
+
+
+}
+
+
+
+};
+
